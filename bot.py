@@ -39,6 +39,5 @@ def load_token():
 	return token.strip('\n')
 
 TOKEN = load_token()
-print(TOKEN)
 client.run(TOKEN)
 
