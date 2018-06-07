@@ -3,8 +3,13 @@ import discord
 
 client = discord.Client()
 
+enableCharLimit = True
+charLimit = 140
+
 @client.event
 async def on_message(message):
+	global enableCharLimit
+
 	if message.author == client.user:
 		return
 	
@@ -38,6 +43,16 @@ async def on_message(message):
 		print(message.channel.name)
 		print(message.channel.server.name)
 		print(message.channel.position)
+	
+	if message.content.startswith("!toggle limit"):
+		enableCharLimit = not enableCharLimit
+		reply = "Character limit enabled: " + str(enableCharLimit)
+		await client.send_message(message.channel,reply)
+	
+	if (len(message.content) > charLimit) and (enableCharLimit):
+		reply = "Message exceeds character limit."
+		await client.send_message(message.channel,reply)
+		await client.delete_message(message)
 		
 @client.event
 async def on_ready():
