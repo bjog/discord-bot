@@ -64,7 +64,7 @@ async def on_message(message):
 		await client.delete_message(message)
 
 	#Check message for banned words		
-	msg = message.content.casefold()
+	msg = message.content.casefold().split()
 	for word in bannedWordList:
 		if word in msg:
 			reply = "Message contained banned word: " + word[0] + ("\*"*(len(word)-2)) + word[-1] + "."
