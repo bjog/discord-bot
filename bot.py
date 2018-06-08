@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 import discord
+import json
 
 client = discord.Client()
 
 enableCharLimit = True
 charLimit = 140
+
+enableWordBan = True
+bannedWordList = []
 
 @client.event
 async def on_message(message):
@@ -48,6 +52,11 @@ async def on_message(message):
 		enableCharLimit = not enableCharLimit
 		reply = "Character limit enabled: " + str(enableCharLimit)
 		await client.send_message(message.channel,reply)
+
+	if message.content.startswith("!toggle wordban"):
+		enableWordBan = not enableWordBan
+		reply = "Word ban enabled: " + str(enableWordBan)
+		await client.send_message(message.channel,reply)
 	
 	if (len(message.content) > charLimit) and (enableCharLimit):
 		reply = "Message exceeds character limit."
@@ -66,6 +75,15 @@ def load_token():
 	f.close()
 	return token.strip('\n')
 
+def load_banned_words():
+	f = open("etc/banned_words.json","r")
+	bannedWords = json.load(f)
+	print(bannedWords)
+	return bannedWords
+
+bannedWordList = load_banned_words()
 TOKEN = load_token()
+
 client.run(TOKEN)
+
 
