@@ -96,7 +96,6 @@ def load_token():
 def load_banned_words():
 	f = open("etc/banned_words.json","r")
 	bannedWords = json.load(f)
-	print(bannedWords)
 	return bannedWords
 
 bannedWordList = load_banned_words()
