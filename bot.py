@@ -64,13 +64,15 @@ async def on_message(message):
 		await client.delete_message(message)
 
 	#Check message for banned words		
-	msg = message.content.casefold().split()
-	for word in bannedWordList:
-		if word in msg:
-			reply = "Message contained banned word: " + word[0] + ("\*"*(len(word)-2)) + word[-1] + "."
-			await client.send_message(message.channel,reply)
-			await client.delete_message(message)
-			break
+	if(enableWordBan):
+		msg = message.content.casefold().split()
+		for word in bannedWordList:
+			if word in msg:
+				reply = "Message contained banned word: " + word[0] + ("\*"*(len(word)-2)) + word[-1] + "."
+				await client.send_message(message.channel,reply)
+				await client.delete_message(message)
+				break
+				
 @client.event
 async def on_ready():
 	print("Logged in as")
