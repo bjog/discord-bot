@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import discord
 import json
-import re
+import string
 
 client = discord.Client()
 
@@ -11,9 +11,15 @@ charLimit = 140
 enableWordBan = True
 bannedWordList = []
 
+def remove_non_alpha_chars(s):
+	for x in string.digits.join(string.punctuation):
+		s = s.replace(x,"")
+	return s
+
 @client.event
 async def on_message(message):
 	global enableCharLimit
+	global enableWordBan
 
 	if message.author == client.user:
 		return
@@ -66,7 +72,8 @@ async def on_message(message):
 
 	#Check message for banned words		
 	if(enableWordBan):
-		msg = message.content.casefold().split()
+		msg =remove_non_alpha_chars(message.content.casefold()).split()
+		print(msg)
 		for word in bannedWordList:
 			if word in msg:
 				reply = "Message contained banned word: " + word[0] + ("\*"*(len(word)-2)) + word[-1] + "."
