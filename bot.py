@@ -73,7 +73,6 @@ async def on_message(message):
 	#Check message for banned words		
 	if(enableWordBan):
 		msg =remove_non_alpha_chars(message.content.casefold()).split()
-		print(msg)
 		for word in bannedWordList:
 			if word in msg:
 				reply = "Message contained banned word: " + word[0] + ("\*"*(len(word)-2)) + word[-1] + "."
@@ -94,7 +93,6 @@ async def on_message_edit(before,after):
 	#Check message for banned words		
 	if(enableWordBan):
 		msg =remove_non_alpha_chars(after.content.casefold()).split()
-		print(msg)
 		for word in bannedWordList:
 			if word in msg:
 				reply = "Edited message contained banned word: " + word[0] + ("\*"*(len(word)-2)) + word[-1] + "."
