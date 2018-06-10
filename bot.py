@@ -73,7 +73,6 @@ async def on_message(message):
 	#Check message for banned words		
 	if(enableWordBan):
 		msg =remove_non_alpha_chars(message.content.casefold()).split()
-		print(msg)
 		for word in bannedWordList:
 			if word in msg:
 				reply = "Message contained banned word: " + word[0] + ("\*"*(len(word)-2)) + word[-1] + "."
@@ -81,6 +80,27 @@ async def on_message(message):
 				await client.delete_message(message)
 				break
 				
+@client.event
+async def on_message_edit(before,after):
+	global enableCharLimit
+	global enableWordBan
+
+	if (len(after.content) > charLimit) and (enableCharLimit):
+		reply = "Edited message exceeds character limit."
+		await client.send_message(after.channel,reply)
+		await client.delete_message(after)
+
+	#Check message for banned words		
+	if(enableWordBan):
+		msg =remove_non_alpha_chars(after.content.casefold()).split()
+		for word in bannedWordList:
+			if word in msg:
+				reply = "Edited message contained banned word: " + word[0] + ("\*"*(len(word)-2)) + word[-1] + "."
+				await client.send_message(after.channel,reply)
+				await client.delete_message(after)
+				break
+				
+
 @client.event
 async def on_ready():
 	print("Logged in as")
