@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
 import discord
+import asyncio
 import json
 import string
 
@@ -26,28 +26,28 @@ async def on_message(message):
 	
 	if message.content.startswith('!hello'):
 		reply = "Hello there!"
-		await client.send_message(message.channel,reply)
+		await message.channel.send(reply)
 
 	if message.content.startswith('!whoami'):
 		reply = "You are " + message.author.name
-		await client.send_message(message.channel, reply)
+		await message.channel.send(reply)
 
 	if message.content.startswith("!siege"):
 		reply = "@everyone **LAUNCH R6:SIEGE ->** steam://run/359550"
-		await client.send_message(message.channel,reply)
+		await message.channel.send(reply)
 
 	if message.content.startswith("!stellaris"):
 		reply = "@everyone **LAUNCH Stellaris ->** steam://run/281990"
-		await client.send_message(message.channel,reply)
+		await message.channel.send(reply)
 
 	if message.content.startswith("!stardew"):
 		reply = "@everyone **LAUNCH Stardew Valley ->** steam://run/413150"
-		await client.send_message(message.channel,reply)
+		await message.channel.send(reply)
 
 
 	if message.content.startswith("!arma3"):
 		reply = "@everyone **LAUNCH ARMA 3 ->** steam://run/107410"
-		await client.send_message(message.channel,reply)
+		await message.channel.send(reply)
 
 	if message.content.startswith("!getinfo"):
 		print(message.channel.id)
@@ -58,16 +58,16 @@ async def on_message(message):
 	if message.content.startswith("!toggle limit"):
 		enableCharLimit = not enableCharLimit
 		reply = "Character limit enabled: " + str(enableCharLimit)
-		await client.send_message(message.channel,reply)
+		await message.channel.send(reply)
 
 	if message.content.startswith("!toggle wordban"):
 		enableWordBan = not enableWordBan
 		reply = "Word ban enabled: " + str(enableWordBan)
-		await client.send_message(message.channel,reply)
+		await message.channel.send(reply)
 	
 	if (len(message.content) > charLimit) and (enableCharLimit):
 		reply = "Message exceeds character limit."
-		await client.send_message(message.channel,reply)
+		await message.channel.send(reply)
 		await client.delete_message(message)
 
 	#Check message for banned words		
@@ -76,7 +76,7 @@ async def on_message(message):
 		for word in bannedWordList:
 			if word in msg:
 				reply = "Message contained banned word: " + word[0] + ("\*"*(len(word)-2)) + word[-1] + "."
-				await client.send_message(message.channel,reply)
+				await message.channel.send(reply)
 				await client.delete_message(message)
 				break
 				
@@ -87,7 +87,7 @@ async def on_message_edit(before,after):
 
 	if (len(after.content) > charLimit) and (enableCharLimit):
 		reply = "Edited message exceeds character limit."
-		await client.send_message(after.channel,reply)
+		await message.channel.send(reply)
 		await client.delete_message(after)
 
 	#Check message for banned words		
@@ -96,7 +96,7 @@ async def on_message_edit(before,after):
 		for word in bannedWordList:
 			if word in msg:
 				reply = "Edited message contained banned word: " + word[0] + ("\*"*(len(word)-2)) + word[-1] + "."
-				await client.send_message(after.channel,reply)
+				await after.channel.send(reply)
 				await client.delete_message(after)
 				break
 				
