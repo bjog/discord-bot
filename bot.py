@@ -68,7 +68,7 @@ async def on_message(message):
 	if (len(message.content) > charLimit) and (enableCharLimit):
 		reply = "Message exceeds character limit."
 		await message.channel.send(reply)
-		await client.delete_message(message)
+		await message.delete()
 
 	#Check message for banned words		
 	if(enableWordBan):
@@ -76,8 +76,8 @@ async def on_message(message):
 		for word in bannedWordList:
 			if word in msg:
 				reply = "Message contained banned word: " + word[0] + ("\*"*(len(word)-2)) + word[-1] + "."
+				await message.delete()
 				await message.channel.send(reply)
-				await client.delete_message(message)
 				break
 				
 @client.event
@@ -87,8 +87,8 @@ async def on_message_edit(before,after):
 
 	if (len(after.content) > charLimit) and (enableCharLimit):
 		reply = "Edited message exceeds character limit."
-		await message.channel.send(reply)
-		await client.delete_message(after)
+		await after.delete()
+		await after.channel.send(reply)
 
 	#Check message for banned words		
 	if(enableWordBan):
@@ -96,8 +96,8 @@ async def on_message_edit(before,after):
 		for word in bannedWordList:
 			if word in msg:
 				reply = "Edited message contained banned word: " + word[0] + ("\*"*(len(word)-2)) + word[-1] + "."
+				await after.delete()
 				await after.channel.send(reply)
-				await client.delete_message(after)
 				break
 				
 
