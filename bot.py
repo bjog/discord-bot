@@ -33,20 +33,20 @@ async def on_message(message):
 		await message.channel.send(reply)
 
 	if message.content.startswith("!siege"):
-		reply = "@everyone **LAUNCH R6:SIEGE ->** steam://run/359550"
+		reply = "**LAUNCH R6:SIEGE ->** steam://run/359550"
 		await message.channel.send(reply)
 
 	if message.content.startswith("!stellaris"):
-		reply = "@everyone **LAUNCH Stellaris ->** steam://run/281990"
+		reply = "**LAUNCH Stellaris ->** steam://run/281990"
 		await message.channel.send(reply)
 
 	if message.content.startswith("!stardew"):
-		reply = "@everyone **LAUNCH Stardew Valley ->** steam://run/413150"
+		reply = "**LAUNCH Stardew Valley ->** steam://run/413150"
 		await message.channel.send(reply)
 
 
 	if message.content.startswith("!arma3"):
-		reply = "@everyone **LAUNCH ARMA 3 ->** steam://run/107410"
+		reply = "**LAUNCH ARMA 3 ->** steam://run/107410"
 		await message.channel.send(reply)
 
 	if message.content.startswith("!getinfo"):
