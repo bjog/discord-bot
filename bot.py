@@ -11,6 +11,8 @@ charLimit = 140
 enableWordBan = True
 bannedWordList = []
 
+dadMode = True
+
 def remove_non_alpha_chars(s):
 	for x in string.digits.join(string.punctuation):
 		s = s.replace(x,"")
@@ -24,6 +26,25 @@ async def on_message(message):
 	if message.author == client.user:
 		return
 	
+	if(dadMode):
+		dadPrefix = "Hi "
+		dadSuffix = ", I'm Dad!"
+		dadJokeFound = False
+		dadJokeString = " "
+
+		msg = message.content
+
+		for word in msg.casefold().split():
+			if(dadJokeFound):
+				dadJokeString = dadJokeString + " " + word
+			if(word in ["i'm","im"]):
+				dadJokeFound = True
+				
+		if(dadJokeFound):
+			reply = dadPrefix + dadJokeString.strip() + dadSuffix
+			dadJokeFound = False
+			await message.channel.send(reply)
+
 	if message.content.startswith('!hello'):
 		reply = "Hello there!"
 		await message.channel.send(reply)
