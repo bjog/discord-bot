@@ -32,9 +32,9 @@ async def on_message(message):
 		dadJokeFound = False
 		dadJokeString = " "
 
-		msg = message.content
+		msg = message.content.casefold().split()
 
-		for word in msg.casefold().split():
+		for word in msg:
 			if(dadJokeFound):
 				dadJokeString = dadJokeString + " " + word
 			if(word in ["i'm","im"]):
