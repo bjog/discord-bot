@@ -2,6 +2,7 @@ import discord
 import asyncio
 import json
 import string
+import bank
 
 client = discord.Client()
 
@@ -25,6 +26,9 @@ async def on_message(message):
 
 	if message.author == client.user:
 		return
+
+	if(message.content.startswith("!bank")):
+		await bank.handle_bank_command(message)
 	
 	if(dadMode):
 		dadPrefix = "Hi "
