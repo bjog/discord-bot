@@ -69,7 +69,6 @@ async def on_message(message):
 		reply = "**LAUNCH Stardew Valley ->** steam://run/413150"
 		await message.channel.send(reply)
 
-
 	if message.content.startswith("!arma3"):
 		reply = "**LAUNCH ARMA 3 ->** steam://run/107410"
 		await message.channel.send(reply)

@@ -27,13 +27,28 @@ def init_bank_data():
 	bankDict = json.load(f)
 	f.close()
 	
-	return Bank(bankDict["accounts"], bankDict["admins"], bankDict["currencyName"], bankDict["name"])
+	accounts = {}
+	for k,v in bankDict["accounts"].items():
+		accounts[int(k)] = v
+
+	return Bank(accounts, bankDict["admins"], bankDict["currencyName"], bankDict["name"])
 
 
 def save_bank_data():
 	f = open("etc/bank.json","w")
 	json.dump(bank.to_dict(),f)
 	f.close()
+
+async def view_balance(message):
+	#!bank balance
+	customer = message.author
+
+	if(customer.id not in bank.accounts):
+		await message.channel.send("Account error: You do not have an account with {0}.".format(bank.name))
+		return
+
+	funds = bank.accounts[customer.id]
+	await message.channel.send("{0}, you have {1} {2} in your account.".format(customer.mention, funds, bank.currencyName ))
 
 async def create_account(message):
 	#!bank create <USER>
@@ -99,5 +114,7 @@ async def handle_bank_command(message):
 		await send_money(message)
 	if(message.content.startswith("!bank create")):
 		await create_account(message)
+	if(message.content.startswith("!bank balance")):
+		await view_balance(message)
 
 bank = init_bank_data()
